@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Book Sports Slot</title></head>
+<body>
+    <h1>Book a Sport</h1>
+    <form action="/book" method="POST">
+        <input type="text" name="name" placeholder="Your name" required><br><br>
+        <select name="sport">
+            <option>Tennis</option><option>Football</option><option>Basketball</option><option>Cricket</option>
+        </select><br><br>
+        <select name="venue">
+            <option>Venue A</option><option>Venue B</option><option>Venue C</option>
+        </select><br><br>
+        <select name="time">
+            <option>10:00 AM - 12:00 PM</option><option>2:00 PM - 4:00 PM</option><option>6:00 PM - 8:00 PM</option>
+        </select><br><br>
+        <label>Accessories?</label>
+        <select name="accessories"><option>Yes</option><option>No</option></select><br><br>
+        <button type="submit">Book Now</button>
+    </form>
+    <br><a href="/login">Admin Login</a>
+</body>
+</html>

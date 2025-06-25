@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>All Bookings</title></head>
+<body>
+    <h2>📋 All Bookings</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th><th>Name</th><th>Sport</th><th>Venue</th><th>Time</th><th>Accessories</th><th>Action</th>
+        </tr>
+        {% for b in bookings %}
+        <tr>
+            <td>{{ b[0] }}</td><td>{{ b[1] }}</td><td>{{ b[2] }}</td>
+            <td>{{ b[3] }}</td><td>{{ b[4] }}</td><td>{{ b[5] }}</td>
+            <td><a href="/delete/{{ b[0] }}" onclick="return confirm('Delete this booking?')">🗑️ Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br><a href="/">Back to Home</a> | <a href="/logout">Logout</a>
+</body>
+</html>
