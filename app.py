@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# In-memory data storage (just for demo)
+# In-memory data storage (resets on app restart)
 bookings = []
 venues = ["Venue A", "Venue B", "Venue C"]
 
@@ -19,7 +19,6 @@ def book():
     date = request.form.get('date')
     time = request.form.get('time')
 
-    # Check if booking exists
     for b in bookings:
         if b['date'] == date and b['venue'] == venue and b['activity'] == activity:
             return "Booking already exists for this date, venue, and activity. Please go back and try another slot."
@@ -34,6 +33,3 @@ def book():
     }
     bookings.append(booking)
     return redirect(url_for('home'))
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
