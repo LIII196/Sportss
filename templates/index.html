@@ -1,23 +1,64 @@
 <!DOCTYPE html>
-<html>
-<head><title>Book Sports Slot</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sports Booking Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 <body>
-    <h1>Book a Sport</h1>
-    <form action="/book" method="POST">
-        <input type="text" name="name" placeholder="Your name" required><br><br>
-        <select name="sport">
-            <option>Tennis</option><option>Football</option><option>Basketball</option><option>Cricket</option>
-        </select><br><br>
-        <select name="venue">
-            <option>Venue A</option><option>Venue B</option><option>Venue C</option>
-        </select><br><br>
-        <select name="time">
-            <option>10:00 AM - 12:00 PM</option><option>2:00 PM - 4:00 PM</option><option>6:00 PM - 8:00 PM</option>
-        </select><br><br>
-        <label>Accessories?</label>
-        <select name="accessories"><option>Yes</option><option>No</option></select><br><br>
-        <button type="submit">Book Now</button>
-    </form>
-    <br><a href="/login">Admin Login</a>
+  <header>
+    <h1>🏟️ Sports Venue Booking</h1>
+  </header>
+
+  <main class="container">
+    <section class="form-section">
+      <h2>Book a Slot</h2>
+      <form method="POST" action="/book">
+        <label for="user">Your Name</label>
+        <input type="text" id="user" name="user" required />
+
+        <label for="activity">Activity</label>
+        <input type="text" id="activity" name="activity" required />
+
+        <label for="venue">Venue</label>
+        <select id="venue" name="venue">
+          {% for venue in venues %}
+            <option value="{{ venue }}">{{ venue }}</option>
+          {% endfor %}
+        </select>
+
+        <label for="accessories">Accessories</label>
+        <input type="text" id="accessories" name="accessories" />
+
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" required />
+
+        <label for="time">Time</label>
+        <input type="time" id="time" name="time" required />
+
+        <button type="submit">✅ Confirm Booking</button>
+      </form>
+    </section>
+
+    <section class="bookings-section">
+      <h2>📋 Existing Bookings</h2>
+      {% if bookings %}
+        {% for booking in bookings %}
+          <div class="booking-card">
+            <p><strong>{{ booking.user }}</strong> booked <em>{{ booking.activity }}</em> at <strong>{{ booking.venue }}</strong></p>
+            <p>Date: {{ booking.date }} | Time: {{ booking.time }}</p>
+            <p>Accessories: {{ booking.accessories }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No bookings yet.</p>
+      {% endif %}
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Sports Booking App | Powered by Flask + Render</p>
+  </footer>
 </body>
 </html>
