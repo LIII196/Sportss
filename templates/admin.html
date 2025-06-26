@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h2>🔒 Admin Panel</h2>
+  <h3>Registered Users</h3>
+  <ul>
+    {% for user in users %}
+      <li>{{ user }}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>All Bookings</h3>
+  <ul>
+    {% for b in bookings %}
+      <li>{{ b.user }} booked {{ b.activity }} at {{ b.venue }} on {{ b.date }} {{ b.time }}</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

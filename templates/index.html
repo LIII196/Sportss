@@ -1,64 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sports Booking Portal</title>
+  <meta charset="UTF-8">
+  <title>Sports Booking</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <header>
-    <h1>🏟️ Sports Venue Booking</h1>
+    <h1>🏟️ Sports Booking Portal</h1>
+    <nav>
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('calendar_view') }}">Calendar</a>
+      {% if user %}
+        {% if user == 'admin' %}
+          <a href="{{ url_for('admin') }}">Admin</a>
+        {% endif %}
+        <span>Welcome, {{ user }}</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+    </nav>
   </header>
 
-  <main class="container">
-    <section class="form-section">
-      <h2>Book a Slot</h2>
-      <form method="POST" action="/book">
-        <label for="user">Your Name</label>
-        <input type="text" id="user" name="user" required />
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flashes">{% for msg in messages %}<li>{{ msg }}</li>{% endfor %}</ul>
+    {% endif %}
+  {% endwith %}
 
-        <label for="activity">Activity</label>
-        <input type="text" id="activity" name="activity" required />
-
-        <label for="venue">Venue</label>
-        <select id="venue" name="venue">
-          {% for venue in venues %}
-            <option value="{{ venue }}">{{ venue }}</option>
-          {% endfor %}
-        </select>
-
-        <label for="accessories">Accessories</label>
-        <input type="text" id="accessories" name="accessories" />
-
-        <label for="date">Date</label>
-        <input type="date" id="date" name="date" required />
-
-        <label for="time">Time</label>
-        <input type="time" id="time" name="time" required />
-
-        <button type="submit">✅ Confirm Booking</button>
-      </form>
-    </section>
-
-    <section class="bookings-section">
-      <h2>📋 Existing Bookings</h2>
-      {% if bookings %}
-        {% for booking in bookings %}
-          <div class="booking-card">
-            <p><strong>{{ booking.user }}</strong> booked <em>{{ booking.activity }}</em> at <strong>{{ booking.venue }}</strong></p>
-            <p>Date: {{ booking.date }} | Time: {{ booking.time }}</p>
-            <p>Accessories: {{ booking.accessories }}</p>
-          </div>
+  <form action="{{ url_for('book') }}" method="POST">
+    <h2>Book a Venue</h2>
+    <label>Activity: <input type="text" name="activity" required></label>
+    <label>Venue:
+      <select name="venue">
+        {% for v in venues %}
+          <option>{{ v.name }}</option>
         {% endfor %}
-      {% else %}
-        <p>No bookings yet.</p>
-      {% endif %}
-    </section>
-  </main>
+      </select>
+    </label>
+    <label>Accessories: <input type="text" name="accessories"></label>
+    <label>Date: <input type="date" name="date" required></label>
+    <label>Time: <input type="time" name="time" required></label>
+    <button type="submit">Book</button>
+  </form>
 
-  <footer>
-    <p>© 2025 Sports Booking App | Powered by Flask + Render</p>
-  </footer>
+  <h2>📅 Recent Bookings</h2>
+  <ul>
+    {% for b in bookings %}
+      <li>{{ b.user }} booked {{ b.activity }} at {{ b.venue }} on {{ b.date }} at {{ b.time }}</li>
+    {% endfor %}
+  </ul>
 </body>
 </html>

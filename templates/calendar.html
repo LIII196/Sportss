@@ -1,28 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Sports Booking{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+  <title>Booking Calendar</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <nav>
-        <div class="logo">🏟️ SportsBook</div>
-        <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('calendar_view') }}">📅 Calendar</a></li>
-            {% if user %}
-                <li><a href="{{ url_for('logout') }}">Logout ({{ user }})</a></li>
-            {% else %}
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-            {% endif %}
-            <li><button id="toggle-theme">🌓</button></li>
-        </ul>
-    </nav>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+  <h2>📆 Calendar View</h2>
+  <table>
+    <tr><th>User</th><th>Activity</th><th>Venue</th><th>Date</th><th>Time</th></tr>
+    {% for b in bookings %}
+      <tr>
+        <td>{{ b.user }}</td>
+        <td>{{ b.activity }}</td>
+        <td>{{ b.venue }}</td>
+        <td>{{ b.date }}</td>
+        <td>{{ b.time }}</td>
+      </tr>
+    {% endfor %}
+  </table>
 </body>
 </html>
